@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
-<title>Flappy Mini</title>
+<title>AhaBird</title>
 <style>
   :root { --ui:#222; --bg:linear-gradient(#88d7ff,#e6f7ff); }
   *{box-sizing:border-box} html,body{height:100%;margin:0}
@@ -24,7 +24,7 @@
   <canvas id="game"></canvas>
   <div id="score" class="hud">0</div>
   <div id="centerUI" class="hud">
-    <h1 id="title">Flappy Mini</h1>
+    <h1 id="title">AhaBird Mini</h1>
     <div id="stats"></div>
     <p id="tips">Nhấn <b>Start</b> rồi chạm màn hình (hoặc bấm Space) để bay qua các ống.</p>
     <button id="startBtn" class="btn">Start</button>
@@ -40,6 +40,11 @@
   const centerUI = document.getElementById('centerUI');
   const startBtn = document.getElementById('startBtn');
   const statsEl = document.getElementById('stats');
+const logoImg = new Image();
+logoImg.src = "logo.png"; // thay bằng tên file logo của bạn
+
+  const birdImg = new Image();
+birdImg.src = "AhaBird.png"; // tên file ảnh của bạn
 
   // Logical game size (we will scale with DPR)
   let W = 360, H = 640;
@@ -150,7 +155,12 @@
   }
 
   // Controls
-  addEventListener('touchstart', e => { e.preventDefault(); flap(); }, {passive:false});
+  addEventListener('touchstart', e => {
+  if (centerUI.style.display !== 'none' && centerUI.contains(e.target)) return; // để UI nhận click
+  e.preventDefault();
+  flap();
+}, { passive:false });
+
   addEventListener('mousedown', flap);
   addEventListener('keydown', e => {
     if(e.code === 'Space'){ e.preventDefault(); flap(); }
@@ -161,6 +171,8 @@
   });
 
   function drawBackground(){
+
+
     // sky
     const g = ctx.createLinearGradient(0,0,0,H);
     g.addColorStop(0,'#88d7ff');
@@ -172,35 +184,25 @@
     ctx.fillRect(0,H-40,W,40);
     ctx.fillStyle = '#5aa64f';
     ctx.fillRect(0,H-36,W,4);
+
+        // Vẽ logo AhaFood.AI ở góc trên
+if (logoImg.complete) {
+  const logoW = 120;  // chiều rộng logo (px)
+  const logoH = 40;   // chiều cao logo (px)
+  ctx.drawImage(logoImg, W - logoW - 10, 10, logoW, logoH);
+}
   }
 
   function drawBird(){
-    // body
-    ctx.save();
-    ctx.translate(bird.x, bird.y);
-    ctx.rotate(bird.rot);
-    // shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.15)';
-    ctx.beginPath(); ctx.arc(2, bird.r+4, bird.r*0.9, 0, Math.PI*2); ctx.fill();
+     ctx.save();
+  ctx.translate(bird.x, bird.y);
+  ctx.rotate(bird.rot);
 
-    // body
-    ctx.fillStyle = '#ffd25a';
-    ctx.beginPath(); ctx.arc(0,0,bird.r,0,Math.PI*2); ctx.fill();
+  // Kích thước vẽ ảnh (có thể chỉnh scale nếu to/nhỏ quá)
+  const size = bird.r * 4.5; // 4.5 = scale, chỉnh số này để phóng to/thu nhỏ
+  ctx.drawImage(birdImg, -size/2, -size/2, size, size);
 
-    // wing
-    ctx.fillStyle = '#ffb84d';
-    const wingY = Math.sin(frame*0.35)*3;
-    ctx.beginPath(); ctx.ellipse(-2, wingY, 10, 6, 0, 0, Math.PI*2); ctx.fill();
-
-    // eye
-    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(3,-4,5,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#222'; ctx.beginPath(); ctx.arc(5,-4,2,0,Math.PI*2); ctx.fill();
-
-    // beak
-    ctx.fillStyle='#ff7a00';
-    ctx.beginPath(); ctx.moveTo(bird.r-2, -2); ctx.lineTo(bird.r+10, 0); ctx.lineTo(bird.r-2, 2); ctx.closePath(); ctx.fill();
-
-    ctx.restore();
+  ctx.restore();
   }
 
   function drawPipes(){
