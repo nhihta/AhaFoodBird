@@ -75,6 +75,15 @@
   }
 }
 
+// Vẽ điểm trực tiếp lên canvas
+function drawScore() {
+    ctx.fillStyle = "#ffffffff";        // màu chữ (có thể đổi sang trắng, vàng, đỏ...)
+    ctx.font = "bold 28px Arial";  // font chữ
+    ctx.textAlign = "center";      // canh giữa
+    ctx.fillText(score, W / 2, 50); // vẽ điểm ở giữa màn hình, cách trên 50px
+}
+
+
     function resetGame() {
         bird.y = H * 0.45;
         bird.vy = 0;
@@ -247,7 +256,7 @@ function gameOver(){
                 if (!p.passed && p.x + pipeW < bird.x) {
                     p.passed = true;
                     score++;
-                    scoreEl.textContent = score;
+                    // scoreEl.textContent = score;
                     beep(900, .06, 'square', .05);
                     // slight difficulty ramp
                     if (score % 5 === 0) {
@@ -268,6 +277,7 @@ function gameOver(){
         drawPipes();
         drawBird();
         drawHUD(); 
+        drawScore();
     }
 
     // Main loop
