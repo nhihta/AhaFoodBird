@@ -42,4 +42,18 @@
 
 #startBtn {
     margin-top: 15px; /* tạo khoảng cách giữa điểm và nút */
+
+}
+
+.highlight-amori {
+    color: #ff6600; /* Màu cam nổi bật */
+    font-weight: bold;
+    font-size: 1.4em;
+    text-shadow: 0 0 8px rgba(255, 102, 0, 0.6); /* Hiệu ứng glow nhẹ */
+    animation: pulse 1.2s infinite; /* Nhấp nháy nhẹ để thu hút */
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
