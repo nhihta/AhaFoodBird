@@ -137,10 +137,6 @@ function gameOver(){
   best = Math.max(best, score);
   localStorage.setItem('flappy_best', best);
 
-  // Show UI + thêm CTA
-  statsEl.innerHTML = `
-    <b>Điểm:</b> ${score} &nbsp;|&nbsp; <b>Kỷ lục:</b>  ${best} 
-  `;
 
   startBtn.textContent = 'Chơi lại';
   centerUI.style.display = 'block';
@@ -288,8 +284,6 @@ function gameOver(){
     }
     loop();
 
-    // Show initial stats
-    statsEl.innerHTML = `<b>Kỷ lục:</b> ${best}`;
 
     // Pause audio context when tab hidden (battery friendly)
     document.addEventListener('visibilitychange', () => {
@@ -297,3 +291,4 @@ function gameOver(){
         if (document.hidden) ac.suspend(); else ac.resume();
     });
 })();
+
