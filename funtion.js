@@ -164,7 +164,7 @@ function gameOver(){
     // GẮN 1 LẦN DUY NHẤT, đặt ngay sau đoạn trên:
     const storeBtn = document.getElementById('storeBtn');
     storeBtn.addEventListener('click', () => {
-        window.open('https://www.ahafood.ai/store', '_blank'); // xem mục 2 bên dưới
+        window.open('https://bit.ly/game_ahabird', '_blank'); // xem mục 2 bên dưới
     });
 
 
@@ -291,4 +291,5 @@ function gameOver(){
         if (document.hidden) ac.suspend(); else ac.resume();
     });
 })();
+
 
